@@ -85,8 +85,12 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
+    user: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Product",productSchema);
+module.exports = mongoose.model("Product", productSchema);
