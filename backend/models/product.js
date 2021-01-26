@@ -71,6 +71,11 @@ const productSchema = new mongoose.Schema(
     },
     reviews: [
       {
+        user: {
+          type: mongoose.SchemaTypes.ObjectId,
+          ref: "User",
+          required: true
+        },
         name: {
           type: String,
           required: true,
@@ -88,6 +93,7 @@ const productSchema = new mongoose.Schema(
     user: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "User",
+      required: true
     },
   },
   { timestamps: true }
