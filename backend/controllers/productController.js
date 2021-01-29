@@ -17,8 +17,8 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 
 //Get all products => /api/v1/products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-  const resPerPage = 4;
-  const productCount = await Product.countDocuments();
+  const resPerPage = 8;
+  const productsCount = await Product.countDocuments();
 
   const apiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
@@ -29,8 +29,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    count: products.length,
-    productCount,
+    productsCount,
     products,
   });
 });
@@ -156,9 +155,11 @@ exports.deleteProductReview = catchAsyncErrors(async (req, res, next) => {
 
   const numOfReviews = reviews.length;
 
-  const ratings = numOfReviews > 0 ?
-    product.reviews.reduce((acc, item) => item.rating + acc, 0) / numOfReviews : 0;
-
+  const ratings =
+    numOfReviews > 0
+      ? product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        numOfReviews
+      : 0;
 
   await Product.findByIdAndUpdate(
     req.query.productId,
