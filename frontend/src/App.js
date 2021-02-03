@@ -22,6 +22,8 @@ import Payment from "./components/cart/Payment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccess from "./components/cart/OrderSuccess";
+import ListOrders from "./components/order/ListOrders";
+import OrderDetails from "./components/order/OrderDetails";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -74,6 +76,10 @@ function App() {
             exact
             component={UpdatePassword}
           />
+
+          <ProtectedRoute path="/orders/me" exact component={ListOrders} />
+          <ProtectedRoute path="/order/:id" exact component={OrderDetails} />
+
         </div>
         <Footer />
       </div>
