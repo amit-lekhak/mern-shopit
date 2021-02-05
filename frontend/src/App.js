@@ -39,6 +39,11 @@ import ProductsList from "./components/admin/ProductsList";
 import NewProduct from "./components/admin/NewProduct";
 import { useSelector } from "react-redux";
 import UpdateProduct from "./components/admin/UpdateProduct";
+import OrdersList from "./components/admin/OrdersList";
+import ProcessOrder from "./components/admin/ProcessOrder";
+import UsersList from "./components/admin/UsersList";
+import UpdateUser from "./components/admin/UpdateUser";
+import ProductReviews from "./components/admin/ProductReviews";
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -125,8 +130,43 @@ function App() {
           component={UpdateProduct}
         />
 
-        {user ?
-          !loading  && user.role !== "admin" && <Footer />
+        <ProtectedRoute
+          path="/admin/orders"
+          isAdmin={true}
+          exact
+          component={OrdersList}
+        />
+
+        <ProtectedRoute
+          path="/admin/order/:id"
+          isAdmin={true}
+          exact
+          component={ProcessOrder}
+        />
+
+        <ProtectedRoute
+          path="/admin/users"
+          isAdmin={true}
+          exact
+          component={UsersList}
+        />
+
+        <ProtectedRoute
+          path="/admin/user/:id"
+          isAdmin={true}
+          exact
+          component={UpdateUser}
+        />
+
+        <ProtectedRoute
+          path="/admin/reviews"
+          isAdmin={true}
+          exact
+          component={ProductReviews}
+        />
+
+        {user
+          ? !loading && user.role !== "admin" && <Footer />
           : !loading && <Footer />}
       </div>
     </Router>

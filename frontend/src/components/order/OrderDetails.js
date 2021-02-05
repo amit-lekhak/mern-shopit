@@ -10,28 +10,18 @@ const OrderDetails = ({ match }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { loading, error, order } = useSelector((state) => state.orderDetails);
+  const { loading, error, order = {} } = useSelector(
+    (state) => state.orderDetails
+  );
 
-  let shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus, id;
-
-  if (order) {
-    shippingInfo = order.shippingInfo;
-    orderItems = order.orderItems;
-    paymentInfo = order.paymentInfo;
-    user = order.user;
-    totalPrice = order.totalPrice;
-    orderStatus = order.orderStatus;
-    id = order._id;
-  }
-
-  //   const {
-  //     shippingInfo,
-  //     orderItems,
-  //     paymentInfo,
-  //     user,
-  //     totalPrice,
-  //     orderStatus,
-  //   } = order;
+  const {
+    shippingInfo,
+    orderItems,
+    paymentInfo,
+    user,
+    totalPrice,
+    orderStatus,
+  } = order;
 
   useEffect(() => {
     dispatch(getOrderDetails(match.params.id));
@@ -59,7 +49,7 @@ const OrderDetails = ({ match }) => {
         <Fragment>
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-lg-8 mt-5 order-details">
-              <h1 className="my-5">Order # {id}</h1>
+              <h1 className="my-5">Order # {order && order._id}</h1>
 
               <h4 className="mb-4">Shipping Info</h4>
               <p>
@@ -112,7 +102,7 @@ const OrderDetails = ({ match }) => {
 
                       <div className="col-5 col-lg-5">
                         <Link to={`/products/${item.product}`}>
-                          {item.namee}
+                          {item.name}
                         </Link>
                       </div>
 
