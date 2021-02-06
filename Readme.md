@@ -3,6 +3,10 @@
 > Complete E-commerce site built with Node.js, React, Redux, Express, MongoDB
 
 
+### Deployed At
+ > https://shopitriser.herokuapp.com/
+
+
 ### Env Variables
 
 Create a .env file in the backend folder in config folder with name config.env
