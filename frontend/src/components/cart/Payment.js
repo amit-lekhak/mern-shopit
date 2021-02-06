@@ -103,6 +103,7 @@ const Payment = ({ history }) => {
           };
 
           dispatch(createOrder(order));
+          localStorage.getItem("cartItems") && localStorage.removeItem("cartItems")
 
           history.push("/success");
         } else {
