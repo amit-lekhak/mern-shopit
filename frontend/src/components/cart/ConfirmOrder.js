@@ -63,7 +63,12 @@ const ConfirmOrder = ({ history }) => {
               <div className="cart-item my-1">
                 <div className="row">
                   <div className="col-4 col-lg-2">
-                    <img src={item.image} alt="Laptop" height="45" width="65" />
+                    <img
+                      src={item.image}
+                      alt="Order_Item_image"
+                      height="45"
+                      width="65"
+                    />
                   </div>
 
                   <div className="col-5 col-lg-6">
@@ -89,7 +94,9 @@ const ConfirmOrder = ({ history }) => {
             <hr />
             <p>
               Subtotal:
-              <span className="order-summary-values">${itemsPrice}</span>
+              <span className="order-summary-values">
+                ${itemsPrice.toFixed(2)}
+              </span>
             </p>
             <p>
               Shipping:
@@ -107,6 +114,7 @@ const ConfirmOrder = ({ history }) => {
 
             <hr />
             <button
+              disabled={cartItems && cartItems.length === 0 ? true : false}
               onClick={proceedToPayment}
               id="checkout_btn"
               className="btn btn-primary btn-block"

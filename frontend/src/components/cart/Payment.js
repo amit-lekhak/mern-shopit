@@ -4,6 +4,7 @@ import MetaData from "../layout/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
 import { useAlert } from "react-alert";
 import { createOrder, clearErrors } from "../../actions/orderActions";
+import { CLEAR_CART } from "../../constants/cartConstants";
 
 import {
   useStripe,
@@ -48,7 +49,7 @@ const Payment = ({ history }) => {
     shippingInfo,
   };
 
-  const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
+  const orderInfo = sessionStorage.getItem("orderInfo") && JSON.parse(sessionStorage.getItem("orderInfo"));
 
   if (orderInfo) {
     order.itemsPrice = orderInfo.itemsPrice;
@@ -58,7 +59,7 @@ const Payment = ({ history }) => {
   }
 
   const paymentData = {
-    amount: Math.round(orderInfo.totalPrice * 100),
+    amount: orderInfo ? Math.round(orderInfo.totalPrice * 100) : 0,
   };
 
   const submitHandler = async (e) => {
@@ -103,9 +104,15 @@ const Payment = ({ history }) => {
           };
 
           dispatch(createOrder(order));
-          localStorage.getItem("cartItems") && localStorage.removeItem("cartItems")
+          localStorage.getItem("cartItems") &&
+            localStorage.removeItem("cartItems");
+          sessionStorage.getItem("orderInfo") &&
+            sessionStorage.removeItem("orderInfo");
 
           history.push("/success");
+          dispatch({
+            type: CLEAR_CART,
+          });
         } else {
           alert.error("There is some issue while processing payment");
         }
@@ -156,7 +163,9 @@ const Payment = ({ history }) => {
               />
             </div>
 
-            <button id="pay_btn" type="submit" className="btn btn-block py-3">
+            <button
+            disabled={cartItems && cartItems.length === 0 ? true : false}
+             id="pay_btn" type="submit" className="btn btn-block py-3">
               Pay {` - ${orderInfo && orderInfo.totalPrice}`}
             </button>
           </form>

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/Home";
@@ -66,42 +66,49 @@ function App() {
       <div className="App">
         <Header />
         <div className="container container-fluid">
-          <Route path="/" exact component={Home} />
-          <Route path="/search/:keyword" exact component={Home} />
-          <Route path="/product/:id" exact component={ProductDetails} />
-
-          <Route path="/cart" exact component={Cart} />
-          <ProtectedRoute path="/shipping" exact component={Shipping} />
-          <ProtectedRoute
-            path="/order/confirm"
-            exact
-            component={ConfirmOrder}
-          />
-
-          <ProtectedRoute path="/success" exact component={OrderSuccess} />
-
           {stripeApiKey && (
             <Elements stripe={loadStripe(stripeApiKey)}>
               <ProtectedRoute path="/payment" exact component={Payment} />
             </Elements>
           )}
 
-          <Route path="/login" exact component={Login} />
-          <Route path="/register" exact component={Register} />
-          <Route path="/password/forgot" exact component={ForgotPassword} />
-          <Route path="/password/reset/:token" exact component={NewPassword} />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/search/:keyword" exact component={Home} />
+            <Route path="/product/:id" exact component={ProductDetails} />
 
-          <ProtectedRoute path="/me" exact component={Profile} />
-          <ProtectedRoute path="/me/update" exact component={UpdateProfile} />
-          <ProtectedRoute
-            path="/password/update"
-            exact
-            component={UpdatePassword}
-          />
+            <Route path="/cart" exact component={Cart} />
+            <ProtectedRoute path="/shipping" exact component={Shipping} />
+            <ProtectedRoute
+              path="/order/confirm"
+              exact
+              component={ConfirmOrder}
+            />
 
-          <ProtectedRoute path="/orders/me" exact component={ListOrders} />
-          <ProtectedRoute path="/order/:id" exact component={OrderDetails} />
+            <ProtectedRoute path="/success" exact component={OrderSuccess} />
+
+            <Route path="/login" component={Login} />
+            <Route path="/register" exact component={Register} />
+            <Route path="/password/forgot" exact component={ForgotPassword} />
+            <Route
+              path="/password/reset/:token"
+              exact
+              component={NewPassword}
+            />
+
+            <ProtectedRoute path="/me" exact component={Profile} />
+            <ProtectedRoute path="/me/update" exact component={UpdateProfile} />
+            <ProtectedRoute
+              path="/password/update"
+              exact
+              component={UpdatePassword}
+            />
+
+            <ProtectedRoute path="/orders/me" exact component={ListOrders} />
+            <ProtectedRoute path="/order/:id" exact component={OrderDetails} />
+          </Switch>
         </div>
+
         <ProtectedRoute
           path="/dashboard"
           isAdmin={true}
@@ -164,7 +171,6 @@ function App() {
           exact
           component={ProductReviews}
         />
-
         {user
           ? !loading && user.role !== "admin" && <Footer />
           : !loading && <Footer />}
