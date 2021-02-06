@@ -10,7 +10,7 @@
 ### Env Variables
 
 Create a .env file in the backend folder in config folder with name config.env
-Add your variables in that as shown in the course.
+Add your variables in that.
 
 ### Install Dependencies (Frontend)
 
