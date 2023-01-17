@@ -4,7 +4,7 @@
 
 
 ### Deployed At
- > https://shopitriser.herokuapp.com/
+ > https://shopit-6wdl.onrender.com
 
 
 ### Env Variables
